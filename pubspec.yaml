@@ -1,5 +1,5 @@
 name: flutter_umplus
-description: 一个简单的友盟 umeng app+ 统计，其他几个库的坑都踩过了，吸收了它们的优点，建议大家有这个库。
+description: lcfarm umeng plugin.android mast change `MainActivity.java` add `onResume`and `onPause`
 version: 0.0.1
 author: 'Timothy <ygmpkk@gmail.com>'
 homepage: 'https://github.com/ygmpkk/flutter_umplus'
