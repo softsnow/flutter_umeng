@@ -17,7 +17,7 @@ class FlutterUmplus {
     bool encrypt = false,
     bool logEnable = false,
   }) {
-    Map<String, dynamic> args = {"key": key, "channel": channel ?? ''};
+    Map<String, dynamic> args = {"key": key, "channel": channel};
 
     if (reportCrash != null) {
       args["reportCrash"] = reportCrash;
