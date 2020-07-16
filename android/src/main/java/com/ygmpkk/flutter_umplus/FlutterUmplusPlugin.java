@@ -14,18 +14,22 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.embedding.engine.plugins.activity.ActivityAware;
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
+import androidx.annotation.NonNull;
 
 /** FlutterUmplusPlugin */
-public class FlutterUmplusPlugin implements MethodCallHandler {
+public class FlutterUmplusPlugin implements MethodCallHandler,FlutterPlugin,ActivityAware {
   private Activity activity;
+  private MethodChannel channel;
 
-  private FlutterUmplusPlugin(Activity activity) { this.activity = activity; }
 
-  /** Plugin registration. */
-  public static void registerWith(Registrar registrar) {
-    final MethodChannel channel =
-        new MethodChannel(registrar.messenger(), "ygmpkk/flutter_umplus");
-    channel.setMethodCallHandler(new FlutterUmplusPlugin(registrar.activity()));
+  @Override
+  public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+    channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "ygmpkk/flutter_umplus");
+    channel.setMethodCallHandler(this);
+
   }
 
   @Override
@@ -45,6 +49,32 @@ public class FlutterUmplusPlugin implements MethodCallHandler {
     } else {
       result.notImplemented();
     }
+  }
+
+  @Override
+  public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+    channel.setMethodCallHandler(null);
+  }
+
+
+  @Override
+  public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+    activity = binding.getActivity();
+  }
+
+  @Override
+  public void onDetachedFromActivityForConfigChanges() {
+
+  }
+
+  @Override
+  public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
+
+  }
+
+  @Override
+  public void onDetachedFromActivity() {
+
   }
 
     private static String getMetadata(Context context, String name) {
