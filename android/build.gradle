@@ -44,3 +44,7 @@ android {
         api 'com.umeng.umsdk:share-sina:7.0.2'
     }
 }
+
+repositories {
+    google()
+}
