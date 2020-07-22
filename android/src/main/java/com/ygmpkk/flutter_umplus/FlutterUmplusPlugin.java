@@ -145,8 +145,8 @@ public class FlutterUmplusPlugin implements MethodCallHandler,FlutterPlugin,Acti
     String channel = (String)call.argument("channel");
     String wxAppKey = (String)call.argument("wxAppKey");
     String wxAppSecret = (String)call.argument("wxAppSecret");
+      String qqAppID = (String)call.argument("qqAppID");
     String qqAppKey = (String)call.argument("qqAppKey");
-    String qqAppSecret = (String)call.argument("qqAppSecret");
     String wbAppKey = (String)call.argument("wbAppKey");
     String wbAppSecret = (String)call.argument("wbAppSecret");
     Boolean logEnable = (Boolean)call.argument("logEnable");
@@ -161,8 +161,8 @@ public class FlutterUmplusPlugin implements MethodCallHandler,FlutterPlugin,Acti
                      null);
     PlatformConfig.setWeixin(wxAppKey, wxAppSecret);
     PlatformConfig.setSinaWeibo(wbAppKey, wbAppSecret,null);
-    PlatformConfig.setQQZone(qqAppKey, qqAppSecret);
-    PlatformConfig.setQQFileProvider("com.ygmpkk.flutter_umplus");
+    PlatformConfig.setQQZone(qqAppID, qqAppKey);
+    PlatformConfig.setQQFileProvider("com.ygmpkk.flutter_umplus.fileprovider");
     UMConfigure.setEncryptEnabled(encrypt);
 
     MobclickAgent.setSessionContinueMillis(30000L);

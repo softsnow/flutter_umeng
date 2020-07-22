@@ -13,19 +13,19 @@ class FlutterUmplus {
   static Future<bool> init(
     String key, {
     String channel,
-    String wxAppKey,
-    String wxAppSecret,
-    String qqAppID,
-    String qqAppSecret,
-    String wbAppKey,
-    String wbAppSecret,
-    String wbRedirectURL,
+    String wxAppKey='',
+    String wxAppSecret='',
+    String qqAppID='',
+    String qqAppKey='',
+    String wbAppKey='',
+    String wbAppSecret='',
+    String wbRedirectURL='',
     bool reportCrash = true,
     bool encrypt = false,
     bool logEnable = false,
   }) {
     Map<String, dynamic> args = {"key": key, "channel": channel,"wxAppKey": wxAppKey, 'wxAppSecret':wxAppSecret, "qqAppID": qqAppID,
-      "qqAppSecret": qqAppSecret,
+      "qqAppKey": qqAppKey,
       "wbAppKey": wbAppKey,
       "wbAppSecret": wbAppSecret,
       "wbRedirectURL": wbRedirectURL,};
