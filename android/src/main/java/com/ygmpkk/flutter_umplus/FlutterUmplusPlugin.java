@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -56,10 +57,15 @@ public class FlutterUmplusPlugin implements MethodCallHandler,FlutterPlugin,Acti
       String desc = call.argument("desc");
       String icon = call.argument("icon");
       String webUrl = call.argument("webUrl");
-      UMImage thumb = new UMImage(activity, icon);
+      UMImage thumb=null;
+      if(icon!=null&&!TextUtils.isEmpty(icon)){
+        thumb = new UMImage(activity, icon);
+      }
       UMWeb web = new UMWeb(webUrl);
       web.setTitle(title);//标题
-      web.setThumb(thumb);  //缩略图
+      if(thumb!=null) {
+        web.setThumb(thumb);//缩略图
+      }
       web.setDescription(desc);//描述
       new ShareAction(activity)
       .setPlatform(getPlat(plat))
