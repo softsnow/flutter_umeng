@@ -12,7 +12,6 @@ public class UmengshareActionListener implements UMShareListener{
     }
     @Override
     public void onStart(SHARE_MEDIA share_media) {
-        result.success("success");
     }
 
     @Override
