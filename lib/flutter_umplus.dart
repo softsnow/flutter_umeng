@@ -13,11 +13,22 @@ class FlutterUmplus {
   static Future<bool> init(
     String key, {
     String channel,
+    String wxAppKey,
+    String wxAppSecret,
+    String qqAppID,
+    String qqAppSecret,
+    String wbAppKey,
+    String wbAppSecret,
+    String wbRedirectURL,
     bool reportCrash = true,
     bool encrypt = false,
     bool logEnable = false,
   }) {
-    Map<String, dynamic> args = {"key": key, "channel": channel};
+    Map<String, dynamic> args = {"key": key, "channel": channel,"wxAppKey": wxAppKey, 'wxAppSecret':wxAppSecret, "qqAppID": qqAppID,
+      "qqAppSecret": qqAppSecret,
+      "wbAppKey": wbAppKey,
+      "wbAppSecret": wbAppSecret,
+      "wbRedirectURL": wbRedirectURL,};
 
     if (reportCrash != null) {
       args["reportCrash"] = reportCrash;
@@ -33,6 +44,18 @@ class FlutterUmplus {
 
     _channel.invokeMethod("init", args);
     return new Future.value(true);
+  }
+  static Future<String> share(
+      {String plat,String title, String desc, String icon, String webUrl}) async {
+    Map<String, dynamic> shareMap = {
+      "plat":plat,
+      "title": title,
+      "desc": desc,
+      "icon": icon,
+      "webUrl": webUrl,
+    };
+    final String result = await _channel.invokeMethod('share', shareMap);
+    return result;
   }
 
   /// 打开页面时进行统计

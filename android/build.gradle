@@ -36,7 +36,11 @@ android {
     }
 
     dependencies {
-        api 'com.umeng.umsdk:analytics:8.0.2'
-        api 'com.umeng.umsdk:common:2.0.2'
+        api 'com.umeng.umsdk:analytics:8.1.4'
+        api 'com.umeng.umsdk:common:9.1.0'
+        api  'com.umeng.umsdk:share-core:7.0.2'
+        api  'com.umeng.umsdk:share-board:7.0.2'
+        api  'com.umeng.umsdk:share-qq:7.0.2'
+        api 'com.umeng.umsdk:share-sina:7.0.2'
     }
 }
