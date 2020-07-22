@@ -62,12 +62,36 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('FlutterUmengPlugin-share Push'),
         ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+        body: new ListView(
+          padding: EdgeInsets.only(top: 10),
+          children: <Widget>[
+            new Center(
+              child: RaisedButton(
+                onPressed: () {
+                  shareWebView();
+                },
+                child: Text("分享网页"),
+              ),
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  // 其中 icon 需要配置在项目中
+  Future<void> shareWebView() async {
+    String result;
+    try {
+      result = await FlutterUmplus.share(title: '分享标题',desc:'分享简介',icon: 'AppIcon',webUrl: 'https://www.baidu.com' ,plat: 'qq');
+    } on PlatformException {
+      result = 'fail';
+    }
+    if (!mounted) return;
+    setState(() {
+      print(result);
+    });
   }
 }

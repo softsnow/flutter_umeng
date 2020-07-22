@@ -62,7 +62,7 @@ public class FlutterUmplusPlugin implements MethodCallHandler,FlutterPlugin,Acti
       web.setThumb(thumb);  //缩略图
       web.setDescription(desc);//描述
       new ShareAction(activity)
-              .setDisplayList(getPlat(plat))
+      .setPlatform(getPlat(plat))
               .withMedia(web)
               .setCallback(new UmengshareActionListener(result))
               .share();
@@ -108,6 +108,7 @@ public class FlutterUmplusPlugin implements MethodCallHandler,FlutterPlugin,Acti
   @Override
   public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
     activity = binding.getActivity();
+    binding.addActivityResultListener(this);
   }
 
   @Override
