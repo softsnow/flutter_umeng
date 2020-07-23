@@ -37,9 +37,15 @@
 }
 
 - (void)initSetup:(FlutterMethodCall *)call result:(FlutterResult)result {
+
   NSString *appKey = call.arguments[@"key"];
   NSString *channel = call.arguments[@"channel"];
-  
+  NSString *wxAppKey = call.argument("wxAppKey");
+  NSString *wxAppSecret =call.argument("wxAppSecret");
+  NSString *qqAppID = call.argument("qqAppID");
+  NSString *qqAppKey = call.argument("qqAppKey");
+  NSString *wbAppKey = call.argument("wbAppKey");
+  NSString *wbAppSecret = (String)call.argument("wbAppSecret");
   BOOL logEnable = [call.arguments[@"logEnable"] boolValue];
   BOOL encrypt = [call.arguments[@"encrypt"] boolValue];
   BOOL reportCrash = [call.arguments[@"reportCrash"] boolValue];
@@ -54,9 +60,41 @@
   [UMConfigure initWithAppkey:appKey channel:channel];
 
   [MobClick setCrashReportEnabled:reportCrash];
-
+  //设置微信的appKey和appSecret
+  [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:wxAppKey appSecret:wxAppSecret redirectURL:nil];
+  //QQ端统一和网页端使用相同的APPKEY
+  [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:qqAppID  appSecret:qqAppKey redirectURL:nil];
+  /* 设置新浪的appKey和appSecret */
+  [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Sina appKey:wbAppKey  appSecret:wbAppSecret redirectURL:nil];
   //[UMErrorCatch initErrorCatch];
   result(nil);
+}
+
+- (void)shareImageText:(FlutterMethodCall *)call result:(FlutterResult)result {
+   [UMSocialUIManager setPreDefinePlatforms:@[@(UMSocialPlatformType_WechatSession),@(UMSocialPlatformType_WechatTimeLine),@(UMSocialPlatformType_QQ),@(UMSocialPlatformType_Sina)]];
+                    //显示分享面板
+                    [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
+                        //创建分享消息对象
+                        UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+                        //设置文本
+                        messageObject.text =call.arguments[@"shareText"];
+                        //创建图片内容对象
+                        UMShareImageObject *shareObject = [[UMShareImageObject alloc] init];
+                        //如果有缩略图，则设置缩略图
+  //                      shareObject.thumbImage = [UIImage imageNamed:@"icon"];
+                        [shareObject setShareImage:call.arguments[@"shareImage"]];
+  //                    [shareObject setShareImageArray:<#(NSArray *)#>];//或者是数组，支持新浪微博
+                        //分享消息对象设置分享内容对象
+                        messageObject.shareObject = shareObject;
+                        //调用分享接口
+                        [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:nil completion:^(id data, NSError *error) {
+                            if (error) {
+                                result(@"fail");
+                            }else{
+                                result(@"success");
+                            }
+                        }];
+                    }];
 }
 
 - (void)beginPageView:(FlutterMethodCall *)call result:(FlutterResult)result {

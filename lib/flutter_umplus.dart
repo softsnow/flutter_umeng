@@ -45,7 +45,7 @@ class FlutterUmplus {
     _channel.invokeMethod("init", args);
     return new Future.value(true);
   }
-  static Future<String> share(
+  static Future<String> shareWeb(
       {String plat,String title, String desc, String icon, String webUrl}) async {
     Map<String, dynamic> shareMap = {
       "plat":plat,
@@ -54,9 +54,31 @@ class FlutterUmplus {
       "icon": icon,
       "webUrl": webUrl,
     };
-    final String result = await _channel.invokeMethod('share', shareMap);
+    final String result = await _channel.invokeMethod('shareWeb', shareMap);
     return result;
   }
+
+
+  static Future<String> shareImageText(
+      {String plat,String text, String icon, String image}) async {
+    Map<String, dynamic> shareMap = {
+      "plat":plat,
+      "text": text,
+      "icon": icon,
+      "image": image,
+    };
+    final String result = await _channel.invokeMethod('shareImageText', shareMap);
+    return result;
+  }
+  static Future<bool> isPlatInstall(
+      String plat) async {
+    Map<String, dynamic> shareMap = {
+      "plat":plat,
+    };
+    final bool result = await _channel.invokeMethod('isPlatInstall', shareMap);
+    return result;
+  }
+
 
   /// 打开页面时进行统计
   /// [name]
