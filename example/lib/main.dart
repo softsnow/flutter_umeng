@@ -45,8 +45,9 @@ class _MyAppState extends State<MyApp> {
   initUMeng() {
     // channel 可设置为空
     FlutterUmplus.init(
-      'Your umeng appkey',
-      channel: 'Your channel',
+      '5f0fc9f89d08ed0862631116',
+      qqAppID: '1110696218',
+      qqAppKey: 'qCRSkKTBrkvhowj5',
       reportCrash: false,
       logEnable: true,
       encrypt: true,
@@ -72,7 +73,15 @@ class _MyAppState extends State<MyApp> {
                 onPressed: () {
                   shareWebView();
                 },
-                child: Text("分享网页"),
+                child: Text("分享网页",style: TextStyle(color: Colors.black),),
+              ),
+            ),
+            new Center(
+              child: RaisedButton(
+                onPressed: () {
+                  shareImageText();
+                },
+                child: Text("分享图文",style: TextStyle(color: Colors.black)),
               ),
             ),
           ],
@@ -83,9 +92,25 @@ class _MyAppState extends State<MyApp> {
 
   // 其中 icon 需要配置在项目中
   Future<void> shareWebView() async {
+
+    bool b= await FlutterUmplus.isPlatInstall('qq');
+    print('111 333  $b');
     String result;
     try {
-      result = await FlutterUmplus.share(title: '分享标题',desc:'分享简介',icon: 'AppIcon',webUrl: 'https://www.baidu.com' ,plat: 'qq');
+      result = await FlutterUmplus.shareWeb(title: '分享标题',desc:'分享简介',icon: 'AppIcon',webUrl: 'https://www.baidu.com' ,plat: 'qq');
+    } on PlatformException {
+      result = 'fail';
+    }
+    if (!mounted) return;
+    setState(() {
+      print(result);
+    });
+  }
+  // 其中 icon 需要配置在项目中
+  Future<void> shareImageText() async {
+    String result;
+    try {
+      result = await FlutterUmplus.shareImageText(text: '分享标题',image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1595485129767&di=09034c0a78f76ea617c9ce0aded8f264&imgtype=0&src=http%3A%2F%2F07.imgmini.eastday.com%2Fmobile%2F20180807%2F20180807212858_ff42f6d6054e6b5fea614ef5b8b8df7d_1.jpeg' ,plat: 'qq');
     } on PlatformException {
       result = 'fail';
     }
